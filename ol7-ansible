@@ -1,0 +1,14 @@
+FROM  library/oraclelinux:7-slim
+LABEL maintainer="reg_info@qq.com"
+RUN   yum upgrade -y && \
+      yum clean all && \
+      rm -rf /var/cache/yum && \
+      rm -fr /var/tmp/yum* && \
+      cd /tmp && \
+      curl -sOL https://bootstrap.pypa.io/get-pip.py && \
+      python get-pip.py && \
+      pip --no-cache-dir install ansible && \
+      rm -fr /tmp/* && \
+      rm -fr /root/* && \
+      cd / 
+
