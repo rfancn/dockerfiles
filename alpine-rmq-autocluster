@@ -1,0 +1,14 @@
+FROM rabbitmq:latest
+ENV  RABBITMQ_USE_LONGNAME=true \
+     AUTOCLUSTER_LOG_LEVEL=debug \
+     AUTOCLUSTER_CLEANUP=true \
+     CLEANUP_INTERVAL=60 \
+     CLEANUP_WARN_ONLY=false \
+     AUTOCLUSTER_TYPE=k8s \
+     LANG=en_US.UTF-8
+RUN  set -x && \
+     curl -sOL https://github.com/rabbitmq/rabbitmq-autocluster/releases/download/0.10.0/autocluster-0.10.0.ez && \
+     curl -sOL https://github.com/rabbitmq/rabbitmq-autocluster/releases/download/0.10.0/rabbitmq_aws-0.10.0.ez && \
+     mv *.ez /usr/lib/rabbitmq/lib/rabbitmq_server*/plugins && \
+     rabbitmq-plugins enable --offline autocluster
+
